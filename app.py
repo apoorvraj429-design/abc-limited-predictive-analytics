@@ -1,6 +1,7 @@
 """ABC Limited | Predictive Analytics & Managerial AI Adoption."""
 import json
 import uuid
+import base64
 from datetime import datetime, timezone
 import numpy as np
 import pandas as pd
@@ -10,25 +11,60 @@ from study_tools import RATINGS, OPEN, THEMES, COLUMNS, merge_responses, rating_
 
 st.set_page_config(page_title='ABC Limited | Customer decisions',page_icon='◉',layout='wide')
 st.markdown('''<style>
-.block-container{padding-top:2rem;max-width:1200px}h1,h2,h3{letter-spacing:-.025em}
+.block-container{padding-top:3.5rem;max-width:1200px}h1,h2,h3{letter-spacing:-.025em}
 [data-testid="stMetric"]{background:white;border:1px solid #dce7ed;border-radius:14px;padding:18px}
+[data-testid="stMetric"] [data-testid="stMetricValue"],
+[data-testid="stMetric"] [data-testid="stMetricValue"] *,
+[data-testid="stMetric"] [data-testid="stMetricLabel"],
+[data-testid="stMetric"] [data-testid="stMetricLabel"] *{color:#193549!important}
+[data-testid="stMetric"] [data-testid="stMetricLabel"]{font-weight:600}
 div[data-testid="stSidebarContent"]{padding-top:1rem}.stButton>button{border-radius:8px}
+.abc-hero{display:flex;align-items:center;gap:24px;background:linear-gradient(120deg,#102e46,#125765);border:1px solid #2d6975;border-radius:22px;padding:30px 34px;margin:8px 0 26px;color:#f4fbff}
+.abc-hero-copy{flex:1;min-width:0}.abc-hero h1{font-size:clamp(1.8rem,3.2vw,2.65rem);line-height:1.12;margin:10px 0 16px;color:#fff;letter-spacing:-.035em}
+.abc-hero p{color:#d3e9ee;font-size:1.05rem;line-height:1.55;margin:0}.abc-eyebrow{color:#77dccb;font-size:.76rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
+.abc-hero img{width:34%;max-width:330px;min-width:180px}.abc-pill{display:inline-block;background:#ffffff12;border:1px solid #ffffff30;border-radius:30px;color:#c8eee7;font-size:.76rem;padding:5px 11px;margin:18px 7px 0 0}
+.abc-brand{display:flex;align-items:center;gap:12px;margin-bottom:8px}.abc-brand-mark{background:#087f8c;color:white;border-radius:12px;padding:12px 9px;font-size:18px;font-weight:800;letter-spacing:-1px}.abc-brand-name{font-size:22px;font-weight:750}
+.abc-panel{border:1px solid #7b9da440;border-radius:18px;padding:22px;margin:8px 0 20px;background:var(--secondary-background-color,transparent)}
+.abc-panel h3{font-size:1.18rem;margin:0 0 4px}.abc-panel p{font-size:.88rem;opacity:.8;margin:0 0 12px}
+.abc-composition{display:flex;align-items:center;justify-content:center;gap:26px;flex-wrap:wrap}.abc-composition img{width:165px}.abc-legend-row{display:flex;align-items:center;gap:10px;padding:9px 0}.abc-dot{width:12px;height:12px;border-radius:50%;display:inline-block}.abc-legend-row strong{font-size:1.15rem}.abc-legend-row span{font-size:.9rem}
+@media(max-width:640px){.abc-hero{padding:24px;flex-direction:column;align-items:flex-start}.abc-hero img{width:100%;max-width:260px;align-self:center}.abc-composition{gap:12px}}
 </style>''',unsafe_allow_html=True)
 
 @st.cache_resource
 def artifacts():return load_artifacts()
 log,lin,meta=artifacts();schema=meta['schema'];threshold=meta['threshold']
+
+def svg_uri(svg):
+    return 'data:image/svg+xml;base64,'+base64.b64encode(svg.encode('utf-8')).decode('ascii')
+
+HERO_SVG='''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250">
+<circle cx="225" cy="120" r="109" fill="#ffffff08"/><circle cx="225" cy="120" r="86" fill="none" stroke="#ffffff14"/>
+<rect x="86" y="55" width="246" height="145" rx="15" fill="#eaf7fb"/><rect x="101" y="70" width="216" height="109" rx="7" fill="#16495c"/>
+<rect x="173" y="201" width="69" height="7" rx="3" fill="#a3c9d2"/><rect x="188" y="208" width="40" height="14" fill="#a3c9d2"/><rect x="156" y="222" width="105" height="6" rx="3" fill="#eaf7fb"/>
+<rect x="113" y="82" width="121" height="84" rx="6" fill="#21697a"/><circle cx="174" cy="123" r="26" fill="#7bdbc4"/><path d="M167 109L187 123L167 137Z" fill="#123f50"/>
+<rect x="246" y="84" width="58" height="11" rx="5" fill="#6ed8c2"/><rect x="246" y="105" width="42" height="6" rx="3" fill="#75a9b5"/><rect x="246" y="120" width="53" height="6" rx="3" fill="#75a9b5"/><rect x="246" y="145" width="47" height="18" rx="8" fill="#367e8c"/>
+<rect x="20" y="148" width="114" height="77" rx="13" fill="#b9eedf"/><circle cx="49" cy="177" r="10" fill="#198c82"/><path d="M33 201Q33 184 49 184Q65 184 65 201" fill="#198c82"/><rect x="76" y="170" width="43" height="7" rx="3" fill="#238f87"/><rect x="76" y="186" width="30" height="6" rx="3" fill="#58aaa1"/>
+<rect x="276" y="21" width="101" height="58" rx="13" fill="#c4ddff"/><circle cx="301" cy="49" r="13" fill="#366eb2"/><path d="M295 49L299 53L307 44" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/><rect x="322" y="38" width="39" height="6" rx="3" fill="#4076b4"/><rect x="322" y="51" width="27" height="5" rx="2" fill="#77a0cf"/>
+<circle cx="57" cy="60" r="17" fill="#f0b87b"/><path d="M50 60H64M57 53V67" stroke="#744e27" stroke-width="3" stroke-linecap="round"/>
+</svg>'''
+
+def overview_graphic():
+    n=meta['data_audit']['rows'];churn=meta['data_audit']['churn_count'];retained=n-churn;share=100*churn/n
+    svg=f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180"><circle cx="90" cy="90" r="70" fill="none" stroke="#36b8a0" stroke-width="22"/><circle cx="90" cy="90" r="70" fill="none" stroke="#eea46b" stroke-width="22" pathLength="100" stroke-dasharray="{share} {100-share}" transform="rotate(-90 90 90)"/><circle cx="90" cy="90" r="53" fill="#eef8f8"/><text x="90" y="88" text-anchor="middle" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#193549">{n:,}</text><text x="90" y="108" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#456675">CUSTOMERS</text></svg>'''
+    st.markdown(f'''<div class="abc-panel"><h3>Customer snapshot</h3><p>Recorded outcomes in the supplied dataset</p><div class="abc-composition"><img src="{svg_uri(svg)}" alt="{churn:,} churned customers and {retained:,} retained customers"/><div><div class="abc-legend-row"><i class="abc-dot" style="background:#eea46b"></i><div><strong>{churn:,}</strong><br/><span>Churned · {share:.1f}%</span></div></div><div class="abc-legend-row"><i class="abc-dot" style="background:#36b8a0"></i><div><strong>{retained:,}</strong><br/><span>Retained · {100-share:.1f}%</span></div></div></div></div></div>''',unsafe_allow_html=True)
+
 with st.sidebar:
-    st.markdown('## ABC Limited')
+    st.markdown('<div class="abc-brand"><div class="abc-brand-mark">ABC</div><div class="abc-brand-name">ABC Limited</div></div>',unsafe_allow_html=True)
     st.caption('CUSTOMER DECISION LAB')
     page=st.radio('Workspace',['Overview','Customer check','Batch review','Model evidence','Manager study','Study analysis'],label_visibility='collapsed')
     st.divider()
-    st.caption('Academic prototype • version 1.0')
+    st.caption('Academic prototype • visual update 1.1')
     st.caption('Synthetic data. Human review required. No verified future prediction period.')
 
 def risk(p):return 'Higher priority' if p>=threshold else 'Lower priority'
 def metrics_row(p):
     a,b,c=st.columns(3);a.metric('Churn score',f'{p:.1%}');b.metric('Review priority',risk(p));c.metric('Review threshold',f'{threshold:.0%}')
+    st.progress(float(p),text=f'Model churn score: {p:.1%} | Review threshold: {threshold:.0%}')
 def show_explanation(row, key):
     exp=explanations(log,pd.DataFrame([row]))
     st.bar_chart(exp.set_index('Factor')['Contribution to log-odds'],horizontal=True,color='#087f8c')
@@ -37,19 +73,19 @@ def show_explanation(row, key):
         st.dataframe(exp,hide_index=True,width="stretch")
 
 if page=='Overview':
-    st.caption('PREDICTIVE ANALYTICS / MANAGERIAL AI ADOPTION')
-    st.title('Better questions. Informed customer decisions.')
-    st.write('Explore which customers merit retention review, understand the model’s reasoning, and study when managers choose to use AI advice.')
+    st.markdown(f'''<div class="abc-hero"><div class="abc-hero-copy"><div class="abc-eyebrow">ABC Limited · Customer Decision Lab</div><h1>Understand customers.<br/>Make informed decisions.</h1><p>Explore customer churn, inspect the evidence and understand when managers choose to use AI advice.</p><span class="abc-pill">Predictive analytics</span><span class="abc-pill">Human judgment</span><span class="abc-pill">Synthetic-data prototype</span></div><img src="{svg_uri(HERO_SVG)}" alt="Illustration of a streaming screen, customer profile and review check"/></div>''',unsafe_allow_html=True)
     a,b,c=st.columns(3)
     a.metric('Customer records','5,000');b.metric('Recorded churn rate',f"{meta['data_audit']['churn_rate']:.1%}");c.metric('Held-out test customers','1,000')
+    st.info('Taking part in the research? Open Manager study first, before exploring customer predictions.')
+    overview_graphic()
     st.markdown('### Two models, two different conclusions')
     a,b=st.columns(2)
     with a:
-        st.markdown('#### Churn review')
+        st.markdown('#### ◎ Churn review')
         st.write('Logistic regression estimates the probability of the recorded churn label. Use it to practise prioritisation and inspect the factors behind the score.')
         st.metric('Test ROC-AUC',f"{meta['churn_test']['roc_auc']:.3f}")
     with b:
-        st.markdown('#### Viewing-hours estimate')
+        st.markdown('#### ◷ Viewing-hours estimate')
         st.write('Linear regression estimates recorded viewing hours from the other available customer attributes. It does not outperform a simple average on the test set.')
         st.metric('Test R²',f"{meta['linear_test']['r2']:.3f}")
     st.info('Start with Customer check. For the research study, participants should begin directly at Manager study, before exploring other pages.')
