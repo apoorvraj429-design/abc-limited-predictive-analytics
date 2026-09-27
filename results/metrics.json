@@ -1,0 +1,194 @@
+{
+  "version": "1.0",
+  "seed": 42,
+  "python": "3.12.14",
+  "sklearn": "1.8.0",
+  "data_audit": {
+    "rows": 5000,
+    "columns": 14,
+    "missing_cells": 0,
+    "duplicate_rows": 0,
+    "duplicate_ids": 0,
+    "churn_count": 2515,
+    "churn_rate": 0.503,
+    "daily_hours_over_24": 10,
+    "derived_daily_match_fraction": 1.0,
+    "sha256": "16e00950956f12921625001315dff2c450c9ca14af885cb19b4035b0b6fb311e"
+  },
+  "split": {
+    "train": 3000,
+    "validation": 1000,
+    "test": 1000
+  },
+  "schema": {
+    "categories": {
+      "subscription_type": [
+        "Basic",
+        "Premium",
+        "Standard"
+      ],
+      "region": [
+        "Africa",
+        "Asia",
+        "Europe",
+        "North America",
+        "Oceania",
+        "South America"
+      ],
+      "device": [
+        "Desktop",
+        "Laptop",
+        "Mobile",
+        "TV",
+        "Tablet"
+      ],
+      "payment_method": [
+        "Credit Card",
+        "Crypto",
+        "Debit Card",
+        "Gift Card",
+        "PayPal"
+      ],
+      "favorite_genre": [
+        "Action",
+        "Comedy",
+        "Documentary",
+        "Drama",
+        "Horror",
+        "Romance",
+        "Sci-Fi"
+      ]
+    },
+    "ranges": {
+      "watch_hours": [
+        0.01,
+        101.06
+      ],
+      "last_login_days": [
+        0.0,
+        60.0
+      ],
+      "number_of_profiles": [
+        1.0,
+        5.0
+      ]
+    },
+    "defaults": {
+      "watch_hours": 8.23,
+      "last_login_days": 30.0,
+      "number_of_profiles": 3.0
+    }
+  },
+  "selection": [
+    {
+      "C": 0.1,
+      "validation_roc_auc": 0.9533303198915161
+    },
+    {
+      "C": 1.0,
+      "validation_roc_auc": 0.9549543783576209
+    },
+    {
+      "C": 10.0,
+      "validation_roc_auc": 0.9552263881499734
+    }
+  ],
+  "chosen_C": 10.0,
+  "threshold": 0.61,
+  "churn_test": {
+    "accuracy": 0.885,
+    "precision": 0.9127659574468086,
+    "recall": 0.852882703777336,
+    "f1": 0.881808838643371,
+    "roc_auc": 0.9668788076370749,
+    "average_precision": 0.9669997030897075,
+    "brier": 0.07285021933550115,
+    "confusion_matrix": [
+      [
+        456,
+        41
+      ],
+      [
+        74,
+        429
+      ]
+    ]
+  },
+  "churn_test_at_050": {
+    "accuracy": 0.893,
+    "precision": 0.8928571428571429,
+    "recall": 0.8946322067594433,
+    "f1": 0.8937437934458788,
+    "roc_auc": 0.9668788076370749,
+    "average_precision": 0.9669997030897075,
+    "brier": 0.07285021933550115,
+    "confusion_matrix": [
+      [
+        443,
+        54
+      ],
+      [
+        53,
+        450
+      ]
+    ]
+  },
+  "churn_validation": {
+    "accuracy": 0.892,
+    "precision": 0.9055441478439425,
+    "recall": 0.8767395626242545,
+    "f1": 0.8909090909090909,
+    "roc_auc": 0.9552263881499734,
+    "average_precision": 0.9582510669802137,
+    "brier": 0.08548437405933099,
+    "confusion_matrix": [
+      [
+        451,
+        46
+      ],
+      [
+        62,
+        441
+      ]
+    ]
+  },
+  "churn_baseline": {
+    "accuracy": 0.503,
+    "precision": 0.503,
+    "recall": 1.0,
+    "f1": 0.669328010645376,
+    "roc_auc": 0.5,
+    "average_precision": 0.503,
+    "brier": 0.24999099999999996,
+    "confusion_matrix": [
+      [
+        0,
+        497
+      ],
+      [
+        0,
+        503
+      ]
+    ]
+  },
+  "linear_test": {
+    "mae": 8.83334908634123,
+    "rmse": 12.391813346059424,
+    "r2": -0.0010072760908221845
+  },
+  "linear_validation": {
+    "mae": 8.832634154365305,
+    "rmse": 12.186863957597456,
+    "r2": -0.013004765652675498
+  },
+  "linear_baseline": {
+    "mae": 8.828943533333335,
+    "rmse": 12.386165794800172,
+    "r2": -9.506872992104398e-05
+  },
+  "linear_interval_radius": 14.870922553429414,
+  "linear_interval_test_coverage": 0.903,
+  "linear_beats_mean_rmse": false,
+  "training_mean_watch_hours": 11.702683333333335,
+  "target_note": "Snapshot churn label and recorded viewing hours; no validated future time horizon."
+}

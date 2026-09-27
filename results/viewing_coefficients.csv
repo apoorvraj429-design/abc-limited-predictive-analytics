@@ -1,0 +1,24 @@
+feature,coefficient
+num__last_login_days,-0.009851681647358853
+num__number_of_profiles,0.12771775869172103
+cat__subscription_type_Premium,-0.013614637452282792
+cat__subscription_type_Standard,0.07783063450212384
+cat__region_Asia,0.23861164391854883
+cat__region_Europe,0.17342435120196711
+cat__region_North America,1.1365350072172422
+cat__region_Oceania,0.35104440686105837
+cat__region_South America,0.33949928747733954
+cat__device_Laptop,-0.4973794732270202
+cat__device_Mobile,-0.30851371423942814
+cat__device_TV,-0.3710914694980928
+cat__device_Tablet,-0.9792686716772865
+cat__payment_method_Crypto,-0.723913055756958
+cat__payment_method_Debit Card,0.060644965495768643
+cat__payment_method_Gift Card,-0.8197425144760211
+cat__payment_method_PayPal,-0.8893546564815871
+cat__favorite_genre_Comedy,1.8040084032294457
+cat__favorite_genre_Documentary,0.9710756561254908
+cat__favorite_genre_Drama,1.6949175811996038
+cat__favorite_genre_Horror,0.024982738239829817
+cat__favorite_genre_Romance,2.762524310186333
+cat__favorite_genre_Sci-Fi,1.4665464276456854

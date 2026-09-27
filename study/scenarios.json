@@ -1,0 +1,38 @@
+[
+  {
+    "scenario_id": "A",
+    "watch_hours": 33.99,
+    "last_login_days": 30.0,
+    "number_of_profiles": 2.0,
+    "subscription_type": "Basic",
+    "region": "Asia",
+    "device": "Laptop",
+    "payment_method": "Credit Card",
+    "favorite_genre": "Drama",
+    "probability": 0.0006854835504485333
+  },
+  {
+    "scenario_id": "B",
+    "watch_hours": 7.37,
+    "last_login_days": 15.0,
+    "number_of_profiles": 2.0,
+    "subscription_type": "Basic",
+    "region": "North America",
+    "device": "TV",
+    "payment_method": "PayPal",
+    "favorite_genre": "Documentary",
+    "probability": 0.5673738617276342
+  },
+  {
+    "scenario_id": "C",
+    "watch_hours": 6.27,
+    "last_login_days": 52.0,
+    "number_of_profiles": 5.0,
+    "subscription_type": "Basic",
+    "region": "Europe",
+    "device": "Laptop",
+    "payment_method": "Gift Card",
+    "favorite_genre": "Sci-Fi",
+    "probability": 0.9980749722352334
+  }
+]

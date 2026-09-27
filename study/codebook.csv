@@ -1,0 +1,10 @@
+code,definition
+USEFULNESS,"Time saving, prioritisation or decision relevance."
+TRUST,"Reliability, validation, data quality or uncertainty."
+EXPLAINABILITY,Understanding drivers or wanting clearer explanations.
+HUMAN_JUDGMENT,"Experience, overrides, verification or shared decisions."
+ERROR_ACCOUNTABILITY,"Fear of mistakes, responsibility or consequences."
+ORGANISATION,"Leadership, cost, integration, training or workflow barriers."
+USABILITY,"Interface, wording, effort or accessibility."
+DATA_LIMITS,"Synthetic data, missing context, timing or weak regression."
+OTHER,An emergent theme; explain it in the coding note.
